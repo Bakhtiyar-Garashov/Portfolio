@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+    <title>E-Portfolio</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="{% static 'assets/css/lightbox.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}"/>
+
+
+</head>
+
+<body class="is-preload">
+
+<!-- Header -->
+<header style="background-image: url({% static 'assets/css/images/overlay.png' %}),url({% static 'images/bg4.jpg' %}); background-size: cover;"
+        id="header">
+    <div class="inner">
+        <a href="{% url 'index' %}" class="image avatar"><img src="{% static 'images/profile.jpg' %}"
+                                                              alt="Profile picture"/></a>
+        <h1 style="color: white;font-weight: bolder;font-size: larger"><strong
+                style="color: white;font-size: larger;font-weight: bolder;">I am Bakhtiyar</strong>, master's
+            degree<br/>
+            student in Geoinformatics for Urbanised Society<br/>
+            at the <a target="_blank" href="https://www.ut.ee/en">University of Tartu</a>.</h1>
+    </div>
+
+</header>
+
+<!-- Main -->
+<div id="main">
+
+    <!-- One -->
+    <section id="one">
+        <header class="major">
+            <h2>Ipsum lorem dolor aliquam ante commodo<br/>
+                magna sed accumsan arcu neque.</h2>
+        </header>
+        <p>Accumsan orci faucibus id eu lorem semper. Eu ac iaculis ac nunc nisi lorem vulputate lorem neque cubilia
+            ac in adipiscing in curae lobortis tortor primis integer massa adipiscing id nisi accumsan pellentesque
+            commodo blandit enim arcu non at amet id arcu magna. Accumsan orci faucibus id eu lorem semper nunc nisi
+            lorem vulputate lorem neque cubilia.</p>
+        <ul class="actions">
+            <li><a href="#" id="learn-more" class="button">Explore my projects</a></li>
+        </ul>
+    </section>
+
+    <!-- Two -->
+    <section id="two">
+        {% if all_projects %}
+            <h2>Recent Work</h2>
+        {% elif full_portfolio %}
+            <h2>Full portfolio</h2>
+        {% endif %}
+        <div class="row">
+
+            {% if all_projects %}
+                {% for one in all_projects %}
+                    <!--------------->
+                    <article class="col-6 col-12-xsmall work-item">
+                        {% if one.project_image %}
+                            <a href="{{ one.project_image.url }}" data-lightbox="image-1" data-title="{{ one.name }}"
+                               class="image fit thumb">
+                                <img src="{{ one.project_image.url }}" width="200" height="200" alt="Picture"/></a>
+                        {% else %}
+                            <a href="{% static 'images/fulls/01.jpg' %}" data-lightbox="image-1"
+                               data-title="{{ one.name }}"
+                               class="image fit thumb">
+                                <img src="{% static 'images/fulls/01.jpg' %}" alt="Picture"/></a>
+                        {% endif %}
+                        <h3>{{ one.name|striptags }}</h3>
+                        <p>{{ one.description|striptags|truncatechars:100 }}</p>
+                        <a href="{{ one.get_absolute_url }}">Read more...</a>
+                    </article>
+                    <!--------------->
+                {% endfor %}
+            {% elif full_portfolio %}
+                {% for whole in full_portfolio %}
+                    <!--------------->
+                    <article class="col-6 col-12-xsmall work-item">
+                        {% if whole.project_image %}
+                            <a href="{{ whole.project_image.url }}" data-lightbox="image-1" data-title="{{ one.name }}"
+                               class="image fit thumb">
+                                <img src="{{ whole.project_image.url }}" width="200" height="200" alt="Picture"/></a>
+                        {% else %}
+                            <a href="{% static 'images/fulls/01.jpg' %}" data-lightbox="image-1"
+                               data-title="{{ whole.name }}"
+                               class="image fit thumb">
+                                <img src="{% static 'images/fulls/01.jpg' %}" alt="Picture"/></a>
+                        {% endif %}
+                        <h3>{{ whole.name|striptags }}</h3>
+                        <p>{{ whole.description|striptags|truncatechars:100 }}</p>
+                        <a href="{{ whole.get_absolute_url }}">Read more...</a>
+                    </article>
+                    <!--------------->
+                {% endfor %}
+            {% endif %}
+
+        </div>
+        <ul class="actions">
+            <li><a href="{% url 'full' %}" class="button">Explore more projects</a></li>
+        </ul>
+    </section>
+
+    <!-- Three -->
+    <section id="three">
+        <h2>Get In Touch</h2>
+        <p>Accumsan pellentesque commodo blandit enim arcu non at amet id arcu magna. Accumsan orci faucibus id eu
+            lorem semper nunc nisi lorem vulputate lorem neque lorem ipsum dolor.</p>
+        <div class="row">
+            <div class="col-8 col-12-small">
+                <form method="post" action="{% url 'email' %}">
+                    {% csrf_token %}
+                    <div class="row gtr-uniform gtr-50">
+                        <div class="col-6 col-12-xsmall"><input type="text" name="name" id="name"
+                                                                placeholder="Subject"/></div>
+                        <div class="col-6 col-12-xsmall"><input type="email" name="email" id="email"
+                                                                placeholder="Recipient"/></div>
+                        <div class="col-12"><textarea name="message" id="message" placeholder="Message"
+                                                      rows="4"></textarea></div>
+                    </div>
+                    <br>
+                    <ul class="actions">
+                        <li><input type="submit" value="Send Message"/></li>
+                    </ul>
+                </form>
+            </div>
+            <div class="col-4 col-12-small">
+                <ul class="labeled-icons">
+                    <li>
+                        <h3 class="icon solid fa-home"><span class="label">Address</span></h3>
+                        Raatuse 22<br/>
+                        Tartu, 51009<br/>
+                        Estonia
+                    </li>
+                    <li>
+                        <h3 class="icon solid fa-mobile-alt"><span class="label">Phone</span></h3>
+                        +372 567 08170
+                    </li>
+                    <li>
+                        <h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>
+                        bakhtiyar.garashov@ut.ee
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <!--social media section-->
+
+
+    </section>
+
+
+    <!-- Footer -->
+
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.poptrox.min.js' %}"></script>
+    <script src="{% static 'assets/js/browser.min.js' %}"></script>
+    <script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+    <script src="{% static 'assets/js/lightbox.js' %}"></script>
+    <script src="{% static 'assets/js/util.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script>
+        $("#learn-more").click(function () {
+            $('html, body').animate({
+                scrollTop: $("#two").offset().top
+            }, 1000);
+        });
+    </script>
+
+</body>
+
+</html>

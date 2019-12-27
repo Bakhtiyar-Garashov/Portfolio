@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <title>E-Portfolio</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="{% static 'assets/css/lightbox.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}"/>
+    <style>
+        .major h2 {
+            margin-top: 20px;
+        }
+
+        .major h2,
+        .main-content {
+            margin-left: 35%;
+            text-align: justify;
+        }
+
+        .watermark {
+            color: black;
+        }
+
+        .download{
+            color: black;
+            font-size: larger;
+        }
+
+
+        @media only screen and (max-width: 980px) {
+            .content,
+            .watermark,
+            .major h2,
+            .download,
+            .main-content {
+                margin-left: 4%;
+                margin-right: 4%;
+                text-align: justify;
+            }
+
+
+        }
+
+
+    </style>
+</head>
+
+<body class="is-preload">
+
+<!-- Header -->
+<header style="background-image: url({% static 'assets/css/images/overlay.png' %}),url({% static 'images/bg4.jpg' %}); background-size: cover;"
+        id="header">
+    <div class="inner">
+        <a href="{% url 'index' %}" class="image avatar"><img src="{% static 'images/profile.jpg' %}"
+                                                              alt="Profile picture"/></a>
+        <h1 style="color: white;font-weight: bolder;font-size: larger"><strong
+                style="color: white;font-size: larger;font-weight: bolder;">I am Bakhtiyar</strong>, master's
+            degree<br/>
+            student in Geoinformatics for Urbanised Society<br/>
+            at the <a target="_blank" href="https://www.ut.ee/en">University of Tartu</a>.</h1>
+    </div>
+</header>
+
+
+<!-- Two -->
+<section class="main-content" id="two">
+
+    <div class="container">
+
+        <div class="row">
+            <div style="float: right" class="col-md-6 col-xl-6 col-sm-12">
+                <section id="one">
+                    <header class="major">
+                        <h2>{{ one_post_detail.name }}</h2>
+                        <hr>
+
+                    </header>
+                    <p class="content">{{ one_post_detail.content|safe }} </p>
+                    <p class="watermark">Posted
+                        by {{ one_post_detail.author|title }}, {{ one_post_detail.created_at|timesince }} ago</p>
+                    <hr>
+                    <a class="download" href="{% url 'download' slug=one_post_detail.slug  %}">Download file: {{ file.file_name }}</a>
+                    <br>
+                    <br>
+
+                </section>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Footer -->
+
+<!-- Scripts -->
+
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.poptrox.min.js' %}"></script>
+<script src="{% static 'assets/js/browser.min.js' %}"></script>
+<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+<script src="{% static 'assets/js/lightbox.js' %}"></script>
+<script src="{% static 'assets/js/util.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>
