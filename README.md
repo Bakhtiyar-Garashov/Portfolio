@@ -1,5 +1,5 @@
 # Portfolio
-Portfolio for Spatial data studio course
+
 
 
 
